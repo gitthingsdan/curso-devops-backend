@@ -1,0 +1,22 @@
+name: stack-cms
+services:
+  wordpress:
+    image: wordpress:latest
+    ports:
+      - 8080:80
+    environment:
+      - WORDPRESS_DB_HOST=bbdd
+      - WORDPRESS_DB_NAME=bd_wordpress
+      - WORDPRESS_DB_USER=wordpress_user
+      - WORDPRESS_DB_PASSWORD=wordpress_password
+  bbdd:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=pass_root_mysql
+      - MYSQL_USER=wordpress_user
+      - MYSQL_PASSWORD=wordpress_password
+      - MYSQL_DATABASE=bd_wordpress
+    volumes:
+      - db_data:/var/lib/mysql
+volumes:
+  db_data:
