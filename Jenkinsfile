@@ -45,15 +45,15 @@ pipeline {
 		stage("CD - Construir imagen") {
 			steps {
 				sh "docker build -t curso-devops-backend:latest ."
-				sh "docker tag curso-devops-backend zeniusv/curso-devops-backend"
-				sh "docker tag curso-devops-backend ghcr.io/gitthingsdan/curso-devops-backend"
+				sh "docker tag curso-devops-backend zeniusv/curso-devops-backend:${env.APP_SEMANTIC_VERSION}"
+				sh "docker tag curso-devops-backend ghcr.io/gitthingsdan/curso-devops-backend:${env.APP_SEMANTIC_VERSION}"
 			}
 		}
 		stage("CD - Distribuir imagen Docker Hub") {
 			steps {
 				script {
 					docker.withRegistry("https://index.docker.io/v1/", "dh-credencial"){
-						sh "docker push zeniusv/curso-devops-backend"
+						sh "docker push zeniusv/curso-devops-backend:${env.APP_SEMANTIC_VERSION}"
 					}
 				}
 			}
@@ -62,7 +62,7 @@ pipeline {
 			steps {
 				script {
 					docker.withRegistry("https://ghcr.io", "gh-credencial"){
-						sh "docker push ghcr.io/gitthingsdan/curso-devops-backend"
+						sh "docker push ghcr.io/gitthingsdan/curso-devops-backend:${env.APP_SEMANTIC_VERSION}"
 					}
 				}
 			}
