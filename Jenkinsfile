@@ -13,7 +13,7 @@ pipeline {
 					steps {
 						script {
 							env.APP_SEMANTIC_VERSION = sh(
-								script: 'npm pkg get version | tr -d \"'
+								script: 'npm pkg get version | tr -d \'"\''
 								returnStdout: true
 							).trim()
 							echo "La versión de mi aplicación es: ${env.APP_SEMANTIC_VERSION}"
